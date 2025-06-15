@@ -53,6 +53,7 @@ class LoginController extends Controller
             $redirectUrl = route('admin.' . $admin->redirect_route);
             return response_api(true, 'نجاح العملية', ['redirect' => $redirectUrl], 201);
         } catch (\Exception $exception) {
+            return $exception;
             return response_api(false, 'فشل العملية يرجى المحاولة لاحقا', [], 500);
         }
 
