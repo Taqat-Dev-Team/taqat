@@ -1,0 +1,112 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: HP15
+ * Date: 04/08/19
+ * Time: 10:08 ص
+ */
+
+namespace App\Traits\Controller;
+
+trait StateWithServiceOrderTrait
+{
+
+    public function getStateWithServiceOrder($admin ,$state_id , $service_id) {
+
+        $admin_states = $admin->states()->pluck('states.id')->toArray();
+        $admin_services= $admin->services()->pluck('services.id')->toArray();
+        $show_havent_state = true;
+
+        if(is_null($state_id) || $state_id == -1) {
+          switch ($admin->is_super) {
+              case 1 :
+                  $state_ids = -1;
+
+                  break;
+              default :
+                  $state_ids = $admin_states;
+//                  dd($state_ids);
+                  break;
+
+
+          }
+        }else {
+            $show_havent_state = false;
+            switch ($admin->is_super) {
+                case 1 :
+                    $state_ids = [$state_id];
+                    break;
+                default :
+                    $state_ids = array_intersect($admin_states , [$state_id]);
+                    break;
+
+            }
+        }
+
+
+        if($service_id == -1) {
+            switch ($admin->is_super) {
+                case 1 :
+                    $service_ids = -1;
+                    break;
+                default :
+                    $service_ids = $admin_services;
+                    break;
+
+            }
+        }else {
+            $show_havent_state = false;
+            switch ($admin->is_super) {
+                case 1 :
+                    $service_ids = [$service_id];
+                    break;
+                default :
+                    $service_ids = array_intersect($admin_services , [$service_id]);
+                    break;
+
+            }
+        }
+
+
+        return ['state_ids' => $state_ids , 'service_ids' => $service_ids , 'show_havent_state' => $show_havent_state];
+    }
+
+
+    public function getServiceOrder($admin , $service_id) {
+
+        $admin_states = $admin->states()->pluck('states.id')->toArray();
+        $admin_services= $admin->services()->pluck('services.id')->toArray();
+        $show_havent_state = true;
+
+
+
+
+        if($service_id == -1) {
+            switch ($admin->is_super) {
+                case 1 :
+                    $service_ids = -1;
+                    break;
+                default :
+                    $service_ids = $admin_services;
+                    break;
+
+            }
+        }else {
+            $show_havent_state = false;
+            switch ($admin->is_super) {
+                case 1 :
+                    $service_ids = [$service_id];
+                    break;
+                default :
+                    $service_ids = array_intersect($admin_services , [$service_id]);
+                    break;
+
+            }
+        }
+
+
+        return ['service_ids' => $service_ids , 'show_havent_state' => $show_havent_state];
+    }
+
+
+}

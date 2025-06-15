@@ -1,0 +1,80 @@
+.choose {
+  position: relative;
+}
+
+.line-spacer {
+  width: 120px;
+  height: 2px;
+  background-color: #EAEAEA;
+  display: block !important;
+  position: absolute;
+  top: 12px;
+}
+
+.line-spacer-2 {
+  width: 120px;
+  height: 2px;
+  background-color: #EAEAEA;
+  display: block !important;
+  position: absolute;
+  top: 12px;
+  right: 0;
+}
+
+.hero {
+  /* Sizing */
+  width: 100%;
+  height: 100vh;
+
+  /* Flexbox stuff */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Text styles */
+  text-align: center;
+  color: white;
+  /* ADD THIS LINE */
+
+  /* Background styles */
+  background-image: url('/images/all-shoes.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.hero h1 {
+  /* Text styles */
+  font-size: 5em;
+
+  /* Margins */
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.hero .btn {
+  /* Positioning and sizing */
+
+
+
+  /* Text styles */
+  color: white;
+  /* CHANGE THIS LINE */
+  text-decoration: none;
+
+
+  /* Border styles */
+  border: 1px solid white;
+  /* CHANGE THIS LINE */
+}
+
+.slick-prev:before, .slick-next:before{
+color: #120B09 !important;
+font-size:30px !important;
+}
+
+.slick-prev {
+left: -35px;
+}
+

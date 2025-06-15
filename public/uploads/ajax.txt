@@ -1,0 +1,153 @@
+  public function ajaxInbox(Request $request)
+    {
+        
+        set_time_limit(120);
+        $user = Auth::User();
+
+        ArcMailTarget::whereIn('mail_id', ArcMailMaster::onlyTrashed()->select('id')->get())
+            ->where('user_id', $user->id)
+            ->update(['seen' => Carbon::now()]);
+
+        $columns = array(
+            0 =>'date',
+            1 =>'serial',
+            2=> 'user_name',
+            3=> 'title',
+        );
+
+        $totalData = ArcMailTarget::query()
+            ->whereIn('id',
+                ArcMailTarget::query()->select(DB::raw('MAX(id) as id'))
+                    ->where('user_id', $user->id)
+                    ->groupBy('mail_id')->get()
+            )->count();
+
+        $orderKey = $request->input('order.0.column');
+        if (!$orderKey) {
+            $orderKey = 0;
+        }
+
+        $limit = $request->input('length');
+        $start = $request->input('start');
+        $order = $columns[$orderKey];
+        $dir = $request->input('order.0.dir');
+
+        $arcMailTargetTableName = (new ArcMailTarget())->getTable();
+        $arcMailMasterTableName = (new ArcMailMaster())->getTable();
+
+        if ($order == 'date') {
+            $order = "$arcMailTargetTableName.created_at";
+        }
+
+        if (!$limit) {
+            $limit = 10;
+        }
+
+        try {
+            $items =  ArcMailMaster
+                ::with('attachments')
+            
+                ->leftJoin($arcMailTargetTableName, "{$arcMailMasterTableName}.id", '=', "{$arcMailTargetTableName}.mail_id")
+            ->whereIn("{$arcMailTargetTableName}.id", ArcMailTarget::query()->select(DB::raw('MAX(id) as id'))->where('user_id', $user->id)->groupBy('mail_id')->get());
+
+            $search = $request->input('search.value');
+            if ($search) {
+                $items->where(function($query) use ($search) {
+                    $query->where('title', 'LIKE', "%$search%");
+                    $query->orWhere(function($innerQuery) use ($search) {
+                        $innerQuery->where('source', '=', 0);
+                        $innerQuery->whereHas('fromUser', function($levelThreeQuery) use ($search){
+                            $levelThreeQuery->where('name_ar', 'LIKE', "%$search%");
+                        });
+                    });
+                    $query->orWhere(function($innerQuery) use ($search) {
+                        $innerQuery->where('source', '=', 1);
+                        $innerQuery->whereHas('fromOut', function($levelThreeQuery) use ($search){
+                            $levelThreeQuery->where('name_ar', 'LIKE', "%$search%");
+                        });
+                    });
+                    $query->orWhere('serial', 'LIKE', "%$search%");
+                });
+            }
+
+            $totalFiltered = $items->count();
+
+            if ($order) {
+                $items = $items->orderBy($order,$dir);
+            }
+
+            $items = $items->limit($limit)
+                ->offset($start)
+                ->get();
+        } catch (\Exception $e) {
+            var_dump($e->getMessage());
+            die();
+        }
+
+        try {
+            $data = array();
+            if(!empty($items))
+            {
+                foreach ($items as $item)
+                {
+                    $viewUrl = url('mail/'.$item->hash);
+
+                    if ($item->source == 0) {
+                        $item->user = $item->fromUser;
+                    } else {
+                        $item->user = $item->fromOut;
+                    }
+
+                    //TODO remove this to show the original user
+//                if ($item['sec_id']) {
+//                    $section = ArcMailRF::query()->where('id', $item['sec_id'])->first();
+//
+//                    if ($section && $section->from_id && $item->source == 0) {
+//                        $item->user = $section->user;
+//                    }
+//                }
+
+                    $nestedData['id'] = $item->id;
+
+                  $dateValue = "<span class=\"pull-right\">{$item->created_at->format('Y-m-d')} </span>";
+
+                if($item->attachments) {
+                    // dd('$item->attachments');
+                    $dateValue .= "<span class=\"pull-left\"><i class=\"fa fa-paperclip\"></i></span>";
+                }
+
+
+                    $nestedData['date'] = $dateValue;
+                    $nestedData['serial'] = "<a target='_blank' href=\"{$viewUrl}\">{$item->serial}</a>";
+
+                    if ($item->user) {
+                        $nestedData['user_name'] = "<a target='_blank' href=\"{$viewUrl}\">{$item->user->name_ar}</a>";
+                    } else {
+                        $nestedData['user_name'] = "<a target='_blank' href=\"{$viewUrl}\">No User</a>";
+                    }
+
+                    $nestedData['title'] = $item->title;
+
+                    $nestedData['seen'] = $item->seen ? true : false;
+
+                    $data[] = $nestedData;
+                }
+
+            }
+
+
+        } catch (\Exception $e) {
+//            var_dump($e->getMessage());
+//            var_dump($e->getTraceAsString());
+//            die();
+        }
+
+        $json_data = array(
+            "draw"            => intval($request->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+
+        echo json_encode($json_data);
+    }

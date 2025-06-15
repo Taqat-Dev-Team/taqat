@@ -1,0 +1,1294 @@
+/* // Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+    .navbar .container-fluid{
+        justify-content: left  !important;
+    }
+    .mobile-footer{
+        display: flex;
+        justify-content: center;  }
+    .img-sign-display{
+        display: block;
+    }
+    .line-spacer{
+        width: 217px;
+        height: 2px;
+        background-color: #EAEAEA ;
+        display: block !important;
+        position: absolute;
+        top: 12px;
+    }
+    .line-spacer-2{
+        width: 217px;
+        height: 2px;
+        background-color: #EAEAEA ;
+        display: block !important;
+        position: absolute;
+        top: 12px;
+        right: 0;
+    }
+    .social-button{
+        margin-top: 10px;
+    }
+    .res-width{
+        width: 60%;
+
+        margin: 0 auto;
+    }
+    .img-box{
+        display: none;
+
+    }
+    .data{
+        width: 100%;
+        padding: 0 35px;
+    }
+    .card{
+        margin-bottom: 20px;
+    }
+    .d-none-res{
+        display: none;
+    }
+    .hidden-mobile{
+        display: none;
+    }
+
+    .grid-gap-items{
+        grid-gap: 20px;
+    }
+    .Right-element{
+        display: none;
+    }
+
+    .shopping-flex{
+        display: flex;
+        flex-direction: column;
+    }
+    .width-box-responsive-right-pro{
+
+        width: 100%;
+    }
+    .slider{
+        display: flex;
+        flex-direction: column;
+
+    }
+    .preview img {
+        height: 100%;
+        width: 100%;
+    }
+
+    .product{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    p,.branch-title,input::placeholder,.btn.btn-primary,.join,.hero .btn{
+        font-size: 10px !important;
+    }
+    .main-title,.main-title-black, h1{
+        font-size: 16px;
+    }
+    .hero-all {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/all-shoes.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    } .sign-style-reaponsive{
+          box-shadow: 0px 1px 4px rgba(21, 21, 21, 0.1);padding: 20px;
+
+          height:48vh;
+      }
+    .social-img-lg {
+        display: none !important;
+    }
+    .social-button{
+        display: block !important;
+
+    }
+    .google-style,.face-style
+    ,.apple-style{
+
+        color: #fff;
+        width: 98px;
+        height: 40px;
+        border-radius: 8px;
+    }
+    .google-style{
+        background: #EA4335;
+    }
+    .face-style{
+        background: #3577E5; }
+    .apple-style{
+        background: #141F1F; }
+
+    .Ques{
+        display: block;
+    }
+
+    .stories-mobile
+    {
+        display: block;
+    }
+    .mainSlider{
+        display: none;
+    }
+    .none-mobile{
+        display: none;
+    }
+    .mobile-flex-column{
+        display: flex;
+        flex-direction: column;
+    }
+    .column-show {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .hero-weman{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/girl.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-kids{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/kids.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }.hero-bar .text-white {
+         position: absolute;
+         top: 50%;
+         right: 5%;
+         width: 80%;
+         text-align: end;
+         transform: translate(-5%, -60%);
+     }
+
+    .display-control{
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+    .navbar .container-fluid{
+        justify-content: left !important;
+    }
+    .img-sign-display{
+        display: block;
+    }
+    .line-spacer{
+        width: 217px;
+        height: 2px;
+        background-color: #EAEAEA ;
+        display: block !important;
+        position: absolute;
+        top: 12px;
+    }
+    .line-spacer-2{
+        width: 217px;
+        height: 2px;
+        background-color: #EAEAEA ;
+        display: block !important;
+        position: absolute;
+        top: 12px;
+        right: 0;
+    }
+    .social-button{
+        margin-top: 10px;
+    }
+    .res-width{
+        width: 50%;
+
+        margin: 0 auto;
+    }
+    .img-box{
+        display: none;
+
+    }
+    .data{
+        width: 100%;
+        padding: 0 35px;
+    }
+    #mobile-filter{
+        display: block;
+        padding: 0 10%;
+    }
+    .grid-gap-items{
+        grid-gap: 20px;
+    }
+
+    #products{
+        width: 80%;
+    }
+
+
+    .container-box {
+        margin-right: 8%;
+    }
+
+    .shopping-flex{
+        display: flex;
+        flex-direction: row;
+    }
+    .width-box-responsive-right{
+        width: 35%;
+    }
+    .width-box-responsive-left{
+        width: 75%;
+    }
+
+    .shopping-flex{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product{
+        margin-left: 10px;
+    }
+    .preview img {
+        height: 80%;
+    }
+
+    p,.branch-title,input::placeholder,.btn.btn-primary,.join,.hero .btn{
+        font-size: 12px;
+    }
+    .main-title,.main-title-black,.hero h1{
+        font-size: 16px;
+    }
+
+    .hero-all {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/all-shoes.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    } .sign-style-reaponsive{
+          box-shadow: 0px 1px 4px rgba(21, 21, 21, 0.1);padding: 20px;      box-shadow: 0px 1px 4px rgba(21, 21, 21, 0.1);padding: 20px;margin: 0 20px 278px 0;
+          height: 37vh;
+      }
+    .social-button{
+        display: none !important;
+    }
+    .Ques{
+        display: block;
+    }
+
+    .stories-mobile
+    {
+        display: none;
+    }
+    .column-show {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero-man {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/man.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-weman{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/girl.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-kids{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/kids.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-bar .text-white {
+        position: absolute;
+        top: 50%;
+        right: 5%;
+        width: 50%;
+        text-align: end;
+        transform: translate(-5%, -50%);
+    }
+    .display-control{
+        display: flex;
+        flex-direction: column;
+    }
+
+
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+    .navbar .container-fluid{
+        justify-content: left !important;
+    }
+    .img-sign-display{
+        display: none;
+    }
+    .line-spacer{
+        width: 104px;
+        height: 2px;
+        background-color: #EAEAEA ;
+        display: block !important;
+        position: absolute;
+        top: 12px;
+    }
+    .line-spacer-2{
+        width:104px;
+        height: 2px;
+        background-color: #EAEAEA ;
+        display: block !important;
+        position: absolute;
+        top: 12px;
+        right: 0;
+    }
+    .social-button{
+        margin-left: 60px;
+    }
+    .res-width{
+        width: 50%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .img-box{
+        display: none;
+
+    }
+    .data{
+        width: 100%;
+        padding: 0 35px;
+    }
+    #mobile-filter{
+        display: none;
+        padding: 0 10%;
+    }
+    #products{
+        width: 75%;
+    }
+
+    .shopping-flex{
+        display: flex;
+        flex-direction: row;
+    }
+    .width-box-responsive-right{
+        width: 35%;
+    }
+    .width-box-responsive-left{
+        width: 75%;
+    }
+
+    .width-box-responsive-right-pro{
+
+        width: 100%;
+    }
+    .slider{
+        display: flex;
+        flex-direction: row;
+
+    }
+    .preview img {
+        height: 80%;
+    }
+
+
+    .product{
+        display: flex;
+        flex-direction: column;
+
+    }
+    .sign-style-reaponsive{
+        box-shadow: 0px 1px 4px rgba(21, 21, 21, 0.1);padding: 20px; margin: 0px 9px 252px 0;; height: 60vh;
+    }
+    .social-button{
+        display: none !important;
+    }
+
+    .column-show {
+        display: flex;
+        flex-direction: column;
+    }
+    .hero-all {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/all-shoes.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-man {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/man.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-weman{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/girl.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-kids{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/kids.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-bar .text-white {
+        position: absolute;
+        top: 50%;
+        right: 5%;
+        width: 35%;
+        text-align: end;
+        transform: translate(-5%, -50%);
+    }
+    .display-control{
+        display: flex;
+        flex-direction: row;
+    }
+
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .img-sign-display{
+        display: none;
+    }
+    .social-button{
+        margin-left: 70px;
+    }
+    .res-width{
+        width: 60%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .img-box{
+        display: none;
+
+    }
+    .data{
+        width: 100%;
+        padding: 0 35px;
+    }
+    .d-none-res-lg{
+        display: none !important;
+    }
+
+    .container-box {
+        margin-right: 8%;
+    }
+    .shopping-flex{
+        display: flex;
+        flex-direction: row;
+    }
+    .width-box-responsive-right{
+        width: 35%;
+    }
+    .width-box-responsive-left{
+        width: 75%;
+    }
+
+
+
+    .slider{
+        display: flex;
+        flex-direction: row;
+
+    }
+    .preview img {
+        height: 65%;
+    }
+
+
+    .product{
+        display: flex;
+        flex-direction: column;
+
+    }
+    .sign-style-reaponsive{
+        box-shadow: 0px 1px 4px rgba(21, 21, 21, 0.1);padding: 20px; margin: 0 20px 263px 0; height: 60vh;
+    }
+    .social-button{
+        display: none !important;
+    }
+
+    .stories-mobile
+    {
+        display: none;
+    }.column-show {
+         display: flex;
+         flex-direction: row;
+     } .hero-all {
+           /* Sizing */
+           width: 100%;
+           height: 100vh;
+
+           /* Flexbox stuff */
+           display: flex;
+           justify-content: center;
+           align-items: center;
+
+           /* Text styles */
+           text-align: center;
+           color: white;
+           /* ADD THIS LINE */
+
+           /* Background styles */
+           background-image: url('/Shoes-Proj/images/all-shoes.png');
+           background-size: cover;
+           background-position: center center;
+           background-repeat: no-repeat;
+           background-attachment: fixed;
+       }
+    .hero-man {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/man.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-weman{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/girl.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-kids{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/kids.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-bar .text-white {
+        position: absolute;
+        top: 50%;
+        right: 5%;
+        width: 28%;
+        text-align: end;
+        transform: translate(-5%, -50%);
+    }
+    .display-control{
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .img-sign-display{
+        display: none;
+    }
+    .social-button{
+        margin-left: 5px;
+    }
+
+    .res-width{
+        width: 40%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .img-box{
+        position: relative;
+        width: 55%;
+        display:block
+    }
+    .img-box .img-1 {
+        position: absolute;
+        left: -17%;
+        top: -73px;
+    }
+    .img-box .img-2 {
+        position: absolute;
+        left: 42%;
+        top: -74px;
+    }
+    .img-box .img-3 {
+        position: absolute;
+        top: -67px;
+        right: -31px;
+    }
+    .img-box .img-4 {
+        position: absolute;
+        bottom: -123px;
+        left: 56%;
+    }
+    .img-box .img-5 {
+        position: absolute;
+        bottom: -96px;
+        left: 43%;
+    }
+
+    .data{
+        width: 55%;
+
+
+    }
+    h1{
+        font-size:24px;
+        margin-top: 2px;
+        margin-bottom: 0.5em;
+        color: white;
+    }
+    .choose {
+        position: relative;
+    }
+
+    .line-spacer {
+        width: 208px;
+        height: 2px;
+        background-color: #EAEAEA;
+        display: block !important;
+        position: absolute;
+        top: 12px;
+    }
+
+    .line-spacer-2 {
+        width: 208px;
+        height: 2px;
+        background-color: #EAEAEA;
+        display: block !important;
+        position: absolute;
+        top: 12px;
+        right: 0;
+    }
+
+    .hero-all {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/all-shoes.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+
+    .hero .btn {
+        /* Positioning and sizing */
+
+
+
+        /* Text styles */
+        color: white;
+        /* CHANGE THIS LINE */
+        text-decoration: none;
+
+
+        /* Border styles */
+        border: 1px solid white;
+        /* CHANGE THIS LINE */
+    }
+    .d-none-res-lg{
+        display: none !important;
+    }
+    .grid-gap-items{
+        grid-gap:130px;
+    }
+    .margin-bottom-md{
+        margin-bottom:180px;
+    }
+
+    .container-box {
+        margin-right: 8%;
+    }
+    .shopping-flex{
+        display: flex;
+        flex-direction: row;
+    }
+    .width-box-responsive-right{
+        width: 35%;
+    }
+    .width-box-responsive-left{
+        width: 75%;
+    }
+
+    .width-box-responsive-right-pro{
+        width: 45%;
+    }
+    .width-box-responsive-lef-prot{
+        width: 55%;
+    }
+    .product{
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+    }
+
+    .slider{
+        display: flex;
+        flex-direction: row;
+
+    }
+    .preview img {
+        height: 80%;
+    }
+    .sign-style-reaponsive{
+        box-shadow: 0px 1px 4px rgba(21, 21, 21, 0.1);padding: 20px; margin: 0 20px 246px 0; height:25vh;
+    }
+    .social-button{
+        display: none !important;
+    }
+
+    .stories-mobile{
+        display: none;
+    }.column-show {
+         display: flex;
+         flex-direction: row;
+     }
+    .hero-all {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/all-shoes.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-man {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/man.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-weman{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/girl.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-kids{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/kids.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-bar .text-white {
+        position: absolute;
+        top: 50%;
+        right: 15%;
+        width: 30%;
+        text-align: end;
+        transform: translate(-10%, -30%);
+    }
+
+    .display-control{
+        display: flex;
+        flex-direction: row;
+    }
+
+}
+
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+    .img-sign-display{
+        display: none;
+    }
+    .social-button{
+        margin-left: 5px;
+    }
+
+    .res-width{
+        width: 40%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .img-box{
+        position: relative;
+        width: 55%;
+        display:block
+    }
+    .img-box .img-1 {
+        position: absolute;
+        left: -9%;
+        top: -73px;
+    }
+    .img-box .img-2 {
+        position: absolute;
+        left: 47%;
+        top: -74px;
+    }
+    .img-box .img-3 {
+        position: absolute;
+        top: -68px;
+        right: -39px;
+    }
+    .img-box .img-4 {
+        position: absolute;
+        bottom: -79px;
+        left: 58%;
+    }
+    .img-box .img-5 {
+        position: absolute;
+        bottom: -68px;
+        left: 46%;
+    }
+
+
+    .data{
+        width: 55%;
+
+
+    }
+
+    .d-none-res-lg{
+        display: none !important;
+    }
+
+
+
+    .grid-gap-items{
+        grid-gap:130px;
+    }
+
+    .container-box {
+        margin-right: 8%;
+    }
+    .shopping-flex{
+        display: flex;
+        flex-direction: row;
+    }
+    .width-box-responsive-right{
+        width: 35%;
+    }
+    .width-box-responsive-left{
+        width: 75%;
+    }
+
+
+    .terms p{
+        font-size: 14px;
+        font-weight: bold;
+    }
+    p, h1,input::placeholder,.btn.btn-primary,.hero .btn,.branch-title{
+        font-size: 16px;
+    }
+    .main-title,.main-title-black, h1{
+        font-size: 24px;
+    }
+    .social-button{
+        display: none !important;
+    }
+    .google-style,.face-style
+    ,.apple-style{
+
+        color: #fff;
+        width: 98px;
+        height: 40px;
+        border-radius: 8px;
+    }
+    .google-style{
+        background: #EA4335;
+    }
+    .face-style{
+        background: #3577E5; }
+    .apple-style{
+        background: #141F1F; }
+    .Ques{
+        display: none;
+    } .hero-all {
+          /* Sizing */
+          width: 100%;
+          height: 100vh;
+
+          /* Flexbox stuff */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          /* Text styles */
+          text-align: center;
+          color: white;
+          /* ADD THIS LINE */
+
+          /* Background styles */
+          background-image: url('/Shoes-Proj/images/all-shoes.png');
+          background-size: cover;
+          background-position: center center;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+      }
+
+    .hero-man {
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/man.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-weman{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/girl.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .hero-kids{
+        /* Sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* Flexbox stuff */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* Text styles */
+        text-align: center;
+        color: white;
+        /* ADD THIS LINE */
+
+        /* Background styles */
+        background-image: url('/Shoes-Proj/images/kids.png');
+        background-size: cover;
+        background-position:center center ;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .display-control{
+        display: flex;
+        flex-direction: row;
+    }
+
+}

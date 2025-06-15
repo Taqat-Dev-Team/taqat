@@ -1,0 +1,348 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+
+        $('#add_edit').on('click', function(e) {
+            e.preventDefault(); // منع السلوك الافتراضي للـ href
+            $('#kt_modal_add_edit').modal('show'); // إظهار الـ modal
+        });
+        // Reset form and hide previews when modal is closed
+        $('#kt_modal_add_edit').on('hidden.bs.modal', function() {
+            const form = $('#my-form'); // The form you want to set the action for
+            $('.error').text('');
+            $('#my-form')[0].reset();
+            $('.modal-title').text("تغير حالة الطلب");
+            // Set the action attribute of the form
+            form.attr('action', "{{ route('restaurants.orders.update') }}");
+
+
+
+        });
+
+        //edit
+        $('#searchTable').on('click', function(e) {
+            e.preventDefault();
+            $('.data-table').DataTable().draw();
+        });
+
+        let table = $('.data-table').DataTable({
+            processing: true,
+            serverSide: true,
+            deferRender: true, // Improves speed by deferring the rendering of rows
+            ajax: {
+                url: "{{ route('restaurants.orders.getIndex') }}",
+                data: function(d) {
+                    d.restaurant_id = "{{ auth()->id() }}";
+                    d.start_date = $('#start_date').val();
+                    d.end_date = $('#end_date').val();
+                    d.status_cd_id = $('#status_cd_id').val();
+                },
+                cache: true, // Avoid unnecessary repeated requests
+            },
+            columns: [{
+
+
+                    data: 'logo',
+                    name: 'logo',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+
+
+
+
+                    data: 'user_name',
+                    name: 'user_name',
+                    orderable: true,
+                    searchable: false
+                },
+
+                {
+
+
+
+
+                    data: 'restaurant_name',
+                    name: 'restaurant_name',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'price',
+                    name: 'price',
+                    orderable: true,
+                    searchable: false
+                },
+
+                {
+                    data: 'quantity',
+                    name: 'quantity',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'total_price',
+                    name: 'total_price',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'date',
+                    name: 'date',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    orderable: true,
+                    searchable: false
+                },
+
+
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            order: [
+                [1, 'asc']
+            ], // Ensure proper default ordering
+            language: {
+                loadingRecords: "Please wait - loading...",
+            },
+            lengthMenu: [10, 25, 50, 100], // Custom page lengths for better UX
+        });
+        // Search filter
+        $('[data-kt-drivers-table-filter="search"]').on('keyup', function() {
+            table.search(this.value).draw();
+        });
+
+        // Form validation and AJAX submit
+
+
+        table.on('xhr', function() {
+            let json = table.ajax.json();
+            if (json.meta) {
+                $('.total-orders').text(json.meta.total_price ?? 0);
+                $('.orders-count').text(json.meta.order_count ?? '0');
+            }
+        });
+
+        $('#exportExcel').on('click', function() {
+            let params = {
+                restaurant_id: "{{ auth()->id() }}",
+                start_date: $('#start_date').val(),
+                end_date: $('#end_date').val(),
+                status_cd_id: $('#status_cd_id').val(),
+            };
+
+            // بناء رابط مع البرامترز
+            let query = $.param(params);
+            let url = "{{ route('restaurants.orders.exportExcel') }}" + "?" + query;
+
+            window.location.href = url;
+        });
+
+
+
+        $('#logo').on('change', function(event) {
+            previewImage(event, '#add_edit_image-preview');
+        });
+
+        $(document).on('click', '.view', function(e) {
+            e.preventDefault();
+            var orderId = $(this).data('order_id');
+
+            $.ajax({
+                url: '{{ route('restaurants.orders.show') }}',
+                method: 'POST',
+                data: {
+                    order_id: orderId,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    $('#orderDetailsModal').modal('show');
+                    $('#order-details-content').html(response.html);
+
+                },
+                error: function() {
+                    toastr.error('حدث خطأ أثناء تحميل التفاصيل');
+                }
+            });
+        });
+
+
+        $(document).on("click", ".edit", function(e) {
+            e.preventDefault();
+            let order_id = $(this).data("order_id");
+            let status_cd_id = $(this).data('status_cd_id');
+            $("#order_id").val(order_id);
+            $("#edit_status_cd_id").val(status_cd_id).trigger("change");
+            $("#editModal").modal("show");
+
+        });
+
+        $('#logo').on('change', function(event) {
+            previewImage(event, '#add_edit_image-preview');
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+    });
+
+    $("#my-form").validate({
+        rules: {
+            name: {
+                required: true
+            },
+
+            password: {
+                required: function() {
+                    return $('#add_edit_restaurant_id').val() == '';
+                }
+            },
+
+
+
+        },
+        submitHandler: function(form) {
+            $('#spinner').show();
+            // $('.error').hide(); // Hide previous error messages
+
+            $('#submit-button').prop('disabled',
+                true); // Disable submit button to prevent multiple submissions
+
+            var url = $('#my-form').attr('action');
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: new FormData(form),
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // Hide the spinner and enable the submit button
+                    $('#spinner').hide();
+                    $('#submit-button').prop('disabled', false);
+
+                    // Handle the response on success
+                    if (response.success) {
+                        toastr.success(response.message,
+                            '{{ __('label.success') }}', {
+                                timeOut: 3000
+                            });
+                        $('#editModal').modal('hide');
+                        $('.data-table').DataTable().ajax.reload();
+                    } else {
+                        toastr.error(response.message, 'Error', {
+                            timeOut: 3000
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    // Hide the spinner and enable the submit button
+                    $('#spinner').hide();
+                    $('#submit-button').prop('disabled', false);
+
+                    if (xhr.status === 422) {
+                        // Loop through the validation errors and display them with toastr
+                        var errors = xhr.responseJSON.errors;
+                        $.each(errors, function(field, messages) {
+                            // Show the error messages in the corresponding fields
+                            var errorContainer = $('#' + field + '_error');
+                            errorContainer.text(messages.join(', '))
+                                .show(); // Join messages if there are multiple
+                        });
+                    } else {
+                        // For other errors, display a general error message
+                        toastr.error(
+                            '{{ __('messages.An error occurred. Please try again later') }}',
+                            'Error', {
+                                timeOut: 3000
+                            });
+                    }
+                }
+            });
+        }
+    });
+
+    function previewImage(event, previewSelector) {
+        const output = $(previewSelector);
+        output.attr('src', URL.createObjectURL(event.target.files[0])).show();
+    }
+
+
+
+    $(document).on('click', '.delete', function(e) {
+        e.preventDefault();
+
+        $('#confirmModal').modal('show')
+        var name_delete = $(this).attr('name_delete');
+        var ids = $(this).attr('id');
+        $('#Delete_id').val(ids);
+        $('#Name_Delete').val(name_delete);
+
+    });
+
+    $(document).on('click', '.submit', function(e) {
+        e.preventDefault();
+
+        $('#confirmModal').modal('hide');
+
+        var ids = $('#Delete_id').val();
+        $.ajax({
+            url: '{{ route('restaurants.orders.delete') }}',
+            method: 'POST',
+            data: {
+                "id": ids,
+                "_token": "{{ csrf_token() }}",
+            },
+            success: function(data) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+
+                $('.data-table').DataTable().ajax.reload();
+
+
+
+
+            },
+            error: function(data) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: data.message,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                $('.data-table').DataTable().ajax.reload();
+
+            }
+
+
+        });
+
+
+
+
+    });
+</script>

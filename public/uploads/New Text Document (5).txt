@@ -1,0 +1,809 @@
+@extends('layouts.front')
+@section('title')
+    @if(app()->getLocale()=='ar')
+        الرئسية
+    @else
+        {{ ucfirst(GoogleTranslate::trans('الرئسية', \app()->getLocale())) }}
+
+    @endif
+
+@endsection
+<?php
+$messages=null;
+if (auth()->check()) {
+
+    $chat_room = \App\Models\ChatRoom::query()->where('user_id', auth()->id())->first();
+    if (isset($chat_room)) {
+        $messages = \App\Models\RoomContent::query()->where('chat_room_id', $chat_room->id)->get();
+    }
+}
+?>
+@section('style')
+
+
+    <link rel="stylesheet" href="{{asset('assets/front/css/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/css/slick-theme.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/front/css/main-style-prod.css')}}">
+    <!-- Custom styles for this template -->
+
+    <!-- lib styles -->
+    <link rel="stylesheet" href="{{asset('assets/front/assets/dist/zuck.css')}}" />
+{{--    <link rel="stylesheet" href="{{asset('assets/stories/style.css')}}" />--}}
+
+
+    <!-- lib skins -->
+    <style>
+
+
+        html,body{
+            overflow-x: hidden;
+        }
+        /*a.close{*/
+        /*    color: white;!important;*/
+        /*}*/
+
+
+        .sec-storys{
+            display: grid;
+            grid: 1fr / auto-flow 100%;
+            gap: 1ch;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            overscroll-behavior: contain;
+            touch-action: pan-x;
+
+        }
+
+
+        .middle{
+            position: absolute;
+            bottom: 25%;
+            left: 0%;
+            width: 100%;
+
+            /*left: 5%;*/
+            /*width: 37%;*/
+
+        }
+        @media (max-width: 767px) {
+
+            .category_img{
+                width: 100%;
+            }
+            .carousel-inner{
+                width: 100%;
+            }
+
+            .item-preview{
+                width: 80%; !important;
+
+            }
+            .item-link .item-preview{
+                width: 120%;
+                height: 120%;
+
+            }
+            .card_image{
+                width: 100%!important;
+                height: 150px!important;
+
+            }
+
+            .item_card{
+
+                width: 100%;!important;
+            }
+
+
+            #zuck-modal-content .story-viewer .slides .item>.media{
+                object-fit: none;
+                    margin-top: 25%;
+
+            }
+        }
+        /*.item-preview{*/
+        /*    max-height: 150px; !important;*/
+        /*}*/
+
+
+        #zuck-modal-content .story-viewer .slides .item>.media{
+            margin-top: 5%;
+            width: 700px;
+            height: 467px;
+        }
+        .card_image{
+            width: 360px;
+            height:240px;
+        }
+        item_card{
+            width: 270px;
+        }
+
+        .stories-full-view .story img{
+            object-fit: contain;
+        }
+
+
+    </style>
+    <link rel="stylesheet" href="{{asset('assets/front/assets/dist/skins/snapgram.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/front/assets/dist/skins/vemdezap.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/front/assets/dist/skins/facesnap.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/front/assets/dist/skins/snapssenger.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/front/css/style_2.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/stories/style.css')}}" />
+
+@endsection
+@section('content')
+
+    <?php
+    $categories=\App\Models\Category::query()->active()->where('parent_category_id',0)->get();
+
+    ?>
+    @if($stories->count()>0)
+
+
+        <section  class="container d-flex justify-content-center flex-column  ">
+
+
+
+    <div class="stories-container">
+        <div class="content">
+            <div class="previous-btn">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 19.5L8.25 12l7.5-7.5"
+                    />
+                </svg>
+            </div>
+
+            <div class="stories"></div>
+
+            <div class="next-btn active">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="stories-full-view">
+        <div class="close-btn">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                />
+            </svg>
+        </div>
+
+        <div class="content">
+            <div class="previous-btn">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 19.5L8.25 12l7.5-7.5"
+                    />
+                </svg>
+            </div>
+
+            <div class="story">
+                <img src="images/3.jpg" alt="" />
+{{--                <a href="" class="href">--}}
+
+
+{{--                <video src=""></video>--}}
+
+                <video width="320" height="240" controls>
+                    <source src="movie.mp4" type="video/mp4">
+                </video>
+                <div class="author">Author</div>
+
+                <a class="route btn-secondary" style="position: absolute;
+    top: 87%;
+    left: 50%;
+    transform: translateX(-50%);
+    {{--font-family: "Roboto", sans-serif;--}}
+                font-size: 18px;
+                background: rgba(0, 0, 0, 0.6);
+                color: #fff;
+                padding: 4px 32px;
+                border-radius: 8px;">Name
+
+
+                </a>
+{{--                </a>--}}
+            </div>
+
+            <div class="next-btn">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+        </section>
+
+    @endif
+{{--    <div class="stories-container">--}}
+{{--        <div class="content">--}}
+{{--            <div class="previous-btn">--}}
+{{--                <svg--}}
+{{--                    xmlns="http://www.w3.org/2000/svg"--}}
+{{--                    fill="none"--}}
+{{--                    viewBox="0 0 24 24"--}}
+{{--                    stroke-width="1.5"--}}
+{{--                    stroke="currentColor"--}}
+{{--                    class="w-6 h-6"--}}
+{{--                >--}}
+{{--                    <path--}}
+{{--                        stroke-linecap="round"--}}
+{{--                        stroke-linejoin="round"--}}
+{{--                        d="M15.75 19.5L8.25 12l7.5-7.5"--}}
+{{--                    />--}}
+{{--                </svg>--}}
+{{--            </div>--}}
+
+{{--            <div class="stories"></div>--}}
+
+{{--            <div class="next-btn active">--}}
+{{--                <svg--}}
+{{--                    xmlns="http://www.w3.org/2000/svg"--}}
+{{--                    fill="none"--}}
+{{--                    viewBox="0 0 24 24"--}}
+{{--                    stroke-width="1.5"--}}
+{{--                    stroke="currentColor"--}}
+{{--                    class="w-6 h-6"--}}
+{{--                >--}}
+{{--                    <path--}}
+{{--                        stroke-linecap="round"--}}
+{{--                        stroke-linejoin="round"--}}
+{{--                        d="M8.25 4.5l7.5 7.5-7.5 7.5"--}}
+{{--                    />--}}
+{{--                </svg>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+{{--    <div class="stories-full-view">--}}
+{{--        <div class="close-btn">--}}
+{{--            <svg--}}
+{{--                xmlns="http://www.w3.org/2000/svg"--}}
+{{--                fill="none"--}}
+{{--                viewBox="0 0 24 24"--}}
+{{--                stroke-width="1.5"--}}
+{{--                stroke="currentColor"--}}
+{{--                class="w-6 h-6"--}}
+{{--            >--}}
+{{--                <path--}}
+{{--                    stroke-linecap="round"--}}
+{{--                    stroke-linejoin="round"--}}
+{{--                    d="M6 18L18 6M6 6l12 12"--}}
+{{--                />--}}
+{{--            </svg>--}}
+{{--        </div>--}}
+
+{{--        <div class="content">--}}
+{{--            <div class="previous-btn">--}}
+{{--                <svg--}}
+{{--                    xmlns="http://www.w3.org/2000/svg"--}}
+{{--                    fill="none"--}}
+{{--                    viewBox="0 0 24 24"--}}
+{{--                    stroke-width="1.5"--}}
+{{--                    stroke="currentColor"--}}
+{{--                    class="w-6 h-6"--}}
+{{--                >--}}
+{{--                    <path--}}
+{{--                        stroke-linecap="round"--}}
+{{--                        stroke-linejoin="round"--}}
+{{--                        d="M15.75 19.5L8.25 12l7.5-7.5"--}}
+{{--                    />--}}
+{{--                </svg>--}}
+{{--            </div>--}}
+
+{{--            <div class="story">--}}
+{{--                <img src="images/3.jpg" alt="" />--}}
+{{--                <div class="author">Author</div>--}}
+{{--            </div>--}}
+
+{{--            <div class="next-btn">--}}
+{{--                <svg--}}
+{{--                    xmlns="http://www.w3.org/2000/svg"--}}
+{{--                    fill="none"--}}
+{{--                    viewBox="0 0 24 24"--}}
+{{--                    stroke-width="1.5"--}}
+{{--                    stroke="currentColor"--}}
+{{--                    class="w-6 h-6"--}}
+{{--                >--}}
+{{--                    <path--}}
+{{--                        stroke-linecap="round"--}}
+{{--                        stroke-linejoin="round"--}}
+{{--                        d="M8.25 4.5l7.5 7.5-7.5 7.5"--}}
+{{--                    />--}}
+{{--                </svg>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+{{--    <section class="container d-flex justify-content-center flex-column sec-storys">--}}
+{{--        <div id="stories" class="storiesWrappers container"  ></div>--}}
+{{--    </section>--}}
+
+
+    <section  class="container d-flex justify-content-center flex-column  ">
+
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" style="color: white;">
+                @foreach($sliders as $key=>$slider)
+
+                    <div class="carousel-item {{$key == 0 ? 'active' : '' }} " style="position: relative;">
+                        <img src="{{$slider->imagesUrl()}}" class="d-block w-100" alt="..." style="border-radius: 0;">
+                        <div class="hero-inner " style="position: absolute; top: 50%;left: 50%; transform: translate(-50%,-50%);">
+                            <h1 class="mb-3 text-center text-white h1-respons" style="color: black !important;">
+
+                                @if(app()->getLocale()=='ar')
+                                    {!!$slider->name  !!}
+                                @else
+                                    {!! ucfirst(GoogleTranslate::trans($slider->name, \app()->getLocale())) !!}
+
+                                @endif
+
+                            </h1>
+                            <div  style="color: black !important;">
+
+                            @if(app()->getLocale()=='ar')
+
+
+                                {!! $slider->description !!}
+                            @else
+                                {!!   ucfirst(GoogleTranslate::trans($slider->description, \app()->getLocale())) !!}
+
+                            @endif
+                            </div>
+                            <p class="text-center ">
+                                <a class="btn btn-primary btn-lg px-5 " href="{{$slider->url}}" role="button" rel="nofollow"
+                                   target="_blank" class="btn btn-primary" style="color: black;!important;">
+                                    @if(app()->getLocale()=='ar')
+                                        تسوق الآن
+                                    @else
+                                        {{ ucfirst(GoogleTranslate::trans('تسوق الآن', \app()->getLocale())) }}
+
+                                    @endif
+
+                                    </a>
+                            </p>
+
+                        </div>
+                    </div>
+
+                @endforeach
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+
+    </section>
+
+
+
+
+
+
+    <section class="container d-flex justify-content-center flex-column ">
+        <div class="row">
+            @if(isset($categories[0]))
+
+            <div class="col-lg-4 col-sm-12">
+                <img
+                    class="category_img"
+                    src="{{asset('assets/front/images/images/images.jpg')}}"
+                    alt=""
+                    style="border-radius: 0% !important ;
+                       width: 100%;
+                       height:80% ;
+                    /*height: 65%;*/
+                    "
+                />
+                <div class="content">
+                    <a href="{{route('front.main_category',$categories[0]->slug)}}">
+                        <button type="button" class="btn btn-light btn-content">
+
+                            @if(app()->getLocale()=='ar')
+                                {{$categories[0]->name}}
+                            @else
+                                {{ ucfirst(GoogleTranslate::trans($categories[0]->name, \app()->getLocale())) }}
+
+                            @endif
+                        </button>
+                    </a>
+                </div>
+            </div>
+            @endif
+            @if(isset($categories[1]))
+
+            <div class="col-lg-4 col-sm-12">
+
+            <img
+                    src="{{asset('assets/front/images/girl/2.png')}}"
+                    alt=""
+                    class="category_img"
+                        style="border-radius: 0% !important ;
+                       width: 100%;
+                       height:80% ;
+                   "
+                />
+                <div class="content">
+                    <a href="{{route('front.main_category',$categories[1]->slug)}}">
+
+
+                        <button type="button" class="btn btn-light btn-content">
+
+                            @if(app()->getLocale()=='ar')
+                                {{$categories[1]->name}}
+                            @else
+                                {{ ucfirst(GoogleTranslate::trans($categories[1]->name, \app()->getLocale())) }}
+
+                            @endif
+                        </button>
+
+                    </a>
+                </div>
+            </div>
+            @endif
+        @if(isset($categories[2]))
+
+                <div class="col-lg-4 col-sm-12" >
+                    <img
+                        src="{{asset('assets/front/images/girl/3.png')}}"
+                        alt=""
+{{--                        class="category_img"--}}
+
+                        style="border-radius: 0% !important;
+                       width: 100%;
+                       height:80% ;
+                        "
+                    />
+                    <div class="content">
+                        <a href="{{route('front.main_category',$categories[2]->slug)}}">
+                            <button type="button" class="btn btn-light btn-content">
+
+                                @if(app()->getLocale()=='ar')
+                                    {{$categories[2]->name}}
+                                @else
+                                    {{ ucfirst(GoogleTranslate::trans($categories[2]->name, \app()->getLocale())) }}
+
+                                @endif
+                            </button>
+
+                        </a>
+                    </div>
+                </div>
+                    @endif
+
+    </section>
+
+
+
+
+    <section class="product-aa" >
+
+        <div class="container">
+            <div class="title-box d-flex justify-content-between  mt-5 ">
+                <a href="{{route('front.mainProducts','discount')}}">
+
+                    @if(app()->getLocale()=='ar')
+                        المزيد
+                    @else
+                        {{ ucfirst(GoogleTranslate::trans('المزيد', \app()->getLocale())) }}
+
+                    @endif
+
+
+
+                </a>
+                <p style="font-weight: bold;font-size: 16px;">
+                    @if(app()->getLocale()=='ar')
+                        الاحدث
+                    @else
+                        {{ ucfirst(GoogleTranslate::trans('الاحدث', \app()->getLocale())) }}
+
+                    @endif
+                    </p>
+            </div>
+            <div class="responsive row my-slider ">
+
+                @foreach($sale_products as  $product)
+                        <?php
+                        $array=[];
+                        $check_auth=false;
+                        $array_compare=[];
+
+                        ?>
+                    @if(auth()->check())
+
+
+
+
+                            <?php
+                            $check_auth=true;
+                            $array=auth()->user()->wishlist->pluck('id')->toArray();
+                            $array_compare=auth()->user()->compare->pluck('id')->toArray();
+                            ?>
+                    @endif
+
+
+
+
+                    <div class="item" >
+                        <input type="hidden" class="check_auth" value="{{$check_auth}}">
+                        <div class="card item_card" >
+                            <a href="{{route('front.productDetails',$product->slug)}}">
+
+                                    <img src="{{asset($product->ImageReview())}}" alt="Avatar" class="card_image" style="  position: relative;" >
+                                   @if($product->is_shared_mobile)
+                                    <span class="tag"><i class="fas fa-mobile-alt"></i></span>
+
+                                    @endif
+{{--                                    <i class="fa fa-plus-circle  icon-color" id="open-modal" aria-hidden="true" style="color:#D32F93 ;--}}
+{{--                                      top: 25%;--}}
+{{--  left: 50%;--}}
+{{--  position: absolute;--}}
+{{--  transform: translate(-50%, -50%);--}}
+
+
+{{--                                    "></i>--}}
+
+
+                            </a>
+
+                            <div class="middle ">
+                                <button class="btn btn-default {{ in_array($product->id, $array) ? 'selected' : 'unselected' }}"
+                                        style="  box-shadow: none;"
+                                        data-product-id="{{ $product->id }}">
+                                    <i class="fa-regular fa-heart " style="font-size: 25px; padding: 10px;"></i></button>
+                                <button  class="btn btn-default {{ in_array($product->id, $array_compare) ? 'selected_compare' : 'unselected_compare' }}"
+                                         style="box-shadow: none;
+
+                                              "
+                                         data-product-id="{{ $product->id }}">
+                                    <i class="fa-solid fa-code-compare" style="font-size: 25px; padding: 10px;"></i></button>
+
+                            </div>
+                            <div></div>
+
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text d-flex">
+                                    <span class="dot"></span>
+                                    <span class="dot-1"></span>
+                                </p>
+                                <a href="{{route('front.productDetails',$product->slug)}}">
+                                    <p class="card-text">
+
+                                        @if(app()->getLocale()=='ar')
+                                            {{$product->name}}
+                                        @else
+                                            {{ ucfirst(GoogleTranslate::trans($product->name, \app()->getLocale())) }}
+
+                                        @endif
+                                    </p>
+                                </a>
+
+                            </div>
+                            <div class="d-flex justify-content-between" >
+
+                            <div class="product_attribute_box_cont" style="direction: rtl;" >
+
+                            </div>
+                            </div>
+                            <a href="{{route('front.productDetails',$product->slug)}}" class="btn btn-primary pull-right w-100">
+
+                                {{$product->regular_price}} &#8362;
+
+
+                            </a>
+
+
+                        </div>
+                    </div>
+                @endforeach
+
+
+            </div>
+        </div>
+        <div class="container" style="margin-bottom: 5%">
+            <div class="title-box d-flex justify-content-between  mt-3 ">
+                <a href="{{route('front.mainProducts','discount')}}">
+
+
+                    @if(app()->getLocale()=='ar')
+                        المزيد
+                    @else
+                        {{ ucfirst(GoogleTranslate::trans('المزيد', \app()->getLocale())) }}
+
+                    @endif
+                </a>
+                <p style="font-weight: bold;font-size: 16px;">
+                    @if(app()->getLocale()=='ar')
+                        العروض
+                    @else
+                        {{ ucfirst(GoogleTranslate::trans('العروض', \app()->getLocale())) }}
+
+                    @endif
+                    </p>
+            </div>
+            <div class="responsive row my-slider ">
+
+                @foreach($sale_products as  $product)
+                        <?php
+                        $array=[];
+                        $check_auth=false;
+                        $array_compare=[];
+
+                        ?>
+                    @if(auth()->check())
+
+
+
+
+                            <?php
+                            $check_auth=true;
+                            $array=auth()->user()->wishlist->pluck('id')->toArray();
+                            $array_compare=auth()->user()->compare->pluck('id')->toArray();
+                            ?>
+                    @endif
+
+
+
+
+                    <div class="item" >
+                        <input type="hidden" class="check_auth" value="{{$check_auth}}">
+                        <div class="card item_card" >
+                            <a href="{{route('front.productDetails',$product->slug)}}">
+
+                                    <img src="{{asset($product->ImageReview())}}" alt="Avatar" class="card_image" style="position: relative;" >
+                                    @if($product->is_shared_mobile)
+                                        <span class="tag"><i class="fas fa-mobile-alt"></i></span>
+
+                                    @endif
+{{--                                    <i class="fa fa-plus-circle  icon-color" id="open-modal" aria-hidden="true" style="color:#D32F93 ;--}}
+{{--                                      top: 25%;--}}
+{{--  left: 50%;--}}
+{{--  position: absolute;--}}
+{{--  transform: translate(-50%, -50%);--}}
+
+
+{{--                                    "></i>--}}
+
+
+</a>
+
+                            <div class="middle ">
+                                <button class="btn btn-default {{ in_array($product->id, $array) ? 'selected' : 'unselected' }}"
+                                        style="  box-shadow: none;"
+                                        data-product-id="{{ $product->id }}">
+                                    <i class="fa-regular fa-heart " style="font-size: 25px; padding: 10px;"></i></button>
+                                <button  class="btn btn-default {{ in_array($product->id, $array_compare) ? 'selected_compare' : 'unselected_compare' }}"
+                                         style="box-shadow: none;
+
+                                              "
+                                         data-product-id="{{ $product->id }}">
+                                    <i class="fa-solid fa-code-compare" style="font-size: 25px; padding: 10px;"></i></button>
+
+                            </div>
+
+
+                            <div></div>
+
+                            <div class="d-flex justify-content-between">
+                                <p class="card-text d-flex">
+                                    <span class="dot"></span>
+                                    <span class="dot-1"></span>
+                                </p>
+                                <a href="{{route('front.productDetails',$product->slug)}}">
+                                    <p class="card-text">
+
+                                        @if(app()->getLocale()=='ar')
+                                            {{$product->name}}
+                                        @else
+                                            {{ ucfirst(GoogleTranslate::trans($product->name, \app()->getLocale())) }}
+
+                                        @endif
+                                    </p>
+                                </a>
+
+                            </div>
+                            <div class="d-flex justify-content-between" >
+
+                                <div class="product_attribute_box_cont" style="direction: rtl;" >
+
+                                </div>
+                            </div>
+                            <a href="{{route('front.productDetails',$product->slug)}}" class="btn btn-primary pull-right w-100">
+
+                                {{$product->regular_price}} &#8362;
+
+
+                            </a>
+
+
+                        </div>
+                    </div>
+                @endforeach
+
+
+            </div>
+        </div>
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+@endsection
+@section('scripts')
+{{--    <script src="{{asset('assets/stories/main.js')}}"></script>--}}
+
+    @include('front.scripts.index')
+
+@endsection

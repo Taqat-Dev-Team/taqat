@@ -1,0 +1,55 @@
+
+
+.hero{
+    width: 100%;
+}
+
+.slider{
+    height: 100vh;
+    display: flex;
+}
+.product img{
+    height: 19vh;
+    margin-bottom: 9px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.product img:hover{
+    opacity: 1;
+}
+
+
+.preview img{
+    height: 100%;
+}
+
+
+
+
+
+.red{
+    width: 20px;
+height:20px;
+border-radius: 50%;
+background-color: red;
+display: block;
+
+}
+.border-red{
+    width: 25px;
+    height:25px;
+    border-radius: 50%;
+border: 1px solid red;    display: block; 
+position: absolute;
+top: -2.5px;
+left: -2.5px;
+}
+
+
+
+
+
+
+
+
