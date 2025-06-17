@@ -803,7 +803,63 @@
 
         <!--end::Scrolltop-->
     </div>
+    <div class="modal fade" id="noSurveyModal" tabindex="-1" role="dialog" aria-labelledby="noSurveyModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="noSurveyModalLabel">حصر بيانات مشتركين طاقات</h5>
+                </div>
+                <form name="survey-form" id="survey-form" method="POST" action="">
 
+
+                    @csrf
+                    <div class="modal-body">
+
+                        <p>
+                    طاقات وفّرت لي بيئة عمل مريحة ومثالية، تناسب طموحات وتخصصات العمل الحر، وتدعمنا لنبدع ونتميّز بثقة.
+
+
+                        </p>
+
+                        @foreach (App\Models\Survey::query()->whereNull('parent_id')->get() as $key => $value)
+                            <div class="mb-4">
+                                <h6 class="mb-2"> {{ $key + 1 }}-{{ $value->title }}</h6>
+                                @foreach ($value->children as $val)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio"
+                                            name="survey[{{ $value->id }}]" id="survey{{ $val->id }}"
+                                            value="{{ $val->id }}">
+                                        <label class="form-check-label" for="survey{{ $val->id }}">
+                                            {{ $val->title }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                                <hr>
+                        @endforeach
+                        <div class="mb-4">
+                            <h6 class="mb-2">السيرة الذاتية</h6>
+
+                            <input class="form-control" type="file" name="cv_file" id="cv_name">
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">تاكيد</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    @if ($showSurveyModal)
+        <script>
+            window.addEventListener('DOMContentLoaded', function() {
+                $('#noSurveyModal').modal('show');
+            });
+        </script>
+    @endif
     <script>
         var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";
     </script>
@@ -901,26 +957,12 @@
     <!--begin::Page Scripts(used by this page)-->
     <script src="{{ asset('assets/admin/js/pages/features/calendar/background-events.js') }}"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
 
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.16.1/echo.js"
-        integrity="sha512-wGqDposamaADDdR/lXykxN/FS3rEgrbA7s0F5f8hgQkHbHc/2rDfAA609BjgzFgqbl2D4Drbnxyr5kR2vKxBCg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     <script>
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('3d1daf32367492d9ffa6', {
-            cluster: 'ap2'
-        });
-
-        var channel = pusher.subscribe('Taqat.13'); // Replace `chatId` with your actual chat ID
-        channel.bind('MessageSent', (e) => {
-            console.log(e);
-            // alert('New message: ' + e.message);
-            $('.chat_count').text(e.no_read);
-
-        });
         $('#description').each(function() {
 
             CKEDITOR.replace(this, {
@@ -939,64 +981,109 @@
             dir: "rtl",
 
         });
-        $(function() {
-            $(".datepicker").datepicker({
-                format: "yyyy-mm-dd",
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                autoclose: true,
-                changeMonth: true,
-                changeYear: true,
-                gotoCurrent: true,
-                orientation: "bottom"
-            });
-
-
-        });
-        $('.clock-in').click(function() {
-            var button = $(this);
-            $.ajax({
-                url: '{{ route('front.clock.in') }}',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                },
-                success: function(response) {
-                    if (response.status) {
-                        toastr.success('تم تنفيد العملية بنجاح',
-                            "نجاح العملية");
-                        button.removeClass('btn-success clock-in').addClass('btn-danger clock-out')
-                            .text('تسجيل انصراف');
-
-                        $('#timer').css('background-color:#f64e60');
-
-                        // $('parent_clock_out').html()
-                    }
-                }
-            });
+        $(".datepicker").datepicker({
+            format: "yyyy-mm-dd",
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            autoclose: true,
+            changeMonth: true,
+            changeYear: true,
+            gotoCurrent: true,
+            orientation: "bottom"
         });
 
-        // Clock Out button click event
-        $('.clock-out').click(function() {
-            var button = $(this);
-
-            $.ajax({
-                url: '{{ route('front.clock.out') }}',
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                },
-                success: function(response) {
-                    if (response.status) {
-                        toastr.success('تم تنفيد العملية بنجاح',
-                            "نجاح العملية");
 
 
-                        button.removeClass('btn-danger clock-out').addClass('btn-success clock-in')
-                            .text('تسجيل حضور');
+
+
+        $("form[name='survey-form']").validate({
+            rules: {
+
+
+                @foreach (App\Models\Survey::query()->whereNull('parent_id')->get() as $value)
+                    "survey[{{ $value->id }}]": {
+                        required: true
+                    },
+                @endforeach
+
+
+
+
+
+
+
+            },
+            messages: {
+
+
+            },
+
+            submitHandler: function(form) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                }
-            });
+                });
+
+                // var my_form=$('#my-form');
+                var data = new FormData(document.getElementById("survey-form"));
+
+                // data.append('note', CKEDITOR.instances['description'].getData());
+
+                //     var $button = $(form).find('button[type="submit"]');
+                // var $spinner = $button.find('.spinner-border');
+
+                $.ajax({
+                    url: '{{ route('front.survey') }}',
+                    type: "POST",
+                    data: data,
+                    dataType: 'JSON',
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+
+                    success: function(response) {
+                        // $spinner.hide();
+
+
+                        if (response.status) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: response.message,
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+
+                            $('#noSurveyModal').modal('hide');
+
+
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: response.message,
+                            })
+                        }
+                    },
+                    error: function(response) {
+                        // $spinner.hide();
+
+                        var errors = response.responseJSON.errors;
+                        if (errors) {
+                            var errorText = "";
+                            $.each(errors, function(key, value) {
+                                errorText += value + "\n";
+                                $('.' + key).text(value);
+
+                            });
+                        }
+                    }
+                });
+
+
+            }
+
         });
     </script>
 

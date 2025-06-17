@@ -176,6 +176,8 @@ Route::group(
         Route::group(['middleware' => 'auth'], function () {
             Route::get('/', [DashbordController::class, 'index'])->name('front.index');
             Route::post('/update-branch', [DashbordController::class, 'updateBranch'])->name('front.joinBranch.update');
+            Route::post('/survey', [DashbordController::class, 'survey'])->name('front.survey');
+
 
             Route::get('users/logout', [AuthContoller::class, 'logout'])->name('front.logout');
             Route::get('user/profile', [ProfileController::class, 'index'])->name('front.profile.index');

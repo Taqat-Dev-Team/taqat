@@ -134,6 +134,7 @@
                     auth('admin')->user()->can('view_users_not_active_menu') ||
                     auth('admin')->user()->can('view_users_delete_hub_menu') ||
                     auth('admin')->user()->can('verification_users') ||
+                    auth('admin')->user()->can('view_users_survey_menu') ||
                     auth('admin')->user()->can('under_examination_users'))
 
                 <li class="{{ request()->segment(3) == 'users' ? 'menu-item menu-item-submenu menu-item-open' : 'menu-item menu-item-submenu' }}"
@@ -183,7 +184,7 @@
 
                                             <span style="color: yellow ;margin-right:3%">
 
-                                                ({{ \App\Models\User::query()->when(auth('admin')->user()->branch_id  ?? false, function ($q) {
+                                                ({{ \App\Models\User::query()->when(auth('admin')->user()->branch_id ?? false, function ($q) {
                                                         $q->where('branch_id', auth('admin')->user()->branch_id);
                                                     })->count() }})
                                             </span>
@@ -201,7 +202,7 @@
                                         </i>
                                         <span class="menu-text">{{ __('label.users_inside_hub_menu') }}
                                             <span style="color: yellow ;margin-right:3%">
-                                                ({{ \App\Models\User::query()->when(auth('admin')->user()->branch_id  ?? false, function ($q) {
+                                                ({{ \App\Models\User::query()->when(auth('admin')->user()->branch_id ?? false, function ($q) {
                                                         $q->where('branch_id', auth('admin')->user()->branch_id);
                                                     })->where('status', 1)->count() }})
                                             </span>
@@ -221,7 +222,7 @@
 
                                         <span class="menu-text"> {{ __('label.users_no_hub_menu') }}
                                             <span style="color: yellow ;margin-right:3%">
-                                                ({{ \App\Models\User::query()->when(auth('admin')->user()->branch_id  ?? false, function ($q) {
+                                                ({{ \App\Models\User::query()->when(auth('admin')->user()->branch_id ?? false, function ($q) {
                                                         $q->where('branch_id', auth('admin')->user()->branch_id);
                                                     })->where('status', 3)->count() }})
 
@@ -283,7 +284,7 @@
                                         <span class="menu-text">{{ __('label.users_under_verification') }}
                                             <span style="color: yellow ;margin-right:3%">
 
-                                                ({{ \App\Models\User::when(auth('admin')->user()->branch_id , function ($q) {
+                                                ({{ \App\Models\User::when(auth('admin')->user()->branch_id, function ($q) {
                                                     // $q->whereHas('branch', function ($q) {
                                                     $q->where('branch_id', auth('admin')->user()->branch_id);
                                                     // });
@@ -315,8 +316,21 @@
                                 </li>
                             @endif
 
+                            @if (auth('admin')->user()->can('view_users_survey_menu'))
+                                <li
+                                    class="{{ request()->segment(5) == 'surveys' ? 'menu-item menu-item-active' : 'menu-item' }} aria-haspopup="true">
+                                    <a href="{{ route('admin.users.surveys') }}" class="menu-link">
+                                        <i class="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                        </i>
+
+                                        <span class="menu-text"> قائمة استبيانات المستخدمين
 
 
+                                        </span>
+                                    </a>
+                                </li>
+                            @endif
 
                             {{-- <li
                                 class="{{ request()->segment(3) == 'users' && request('user_types') == 'اشتراك انترنت' ? 'menu-item menu-item-active' : 'menu-item' }} aria-haspopup="true">
@@ -368,7 +382,7 @@
 
                                         <span class="menu-text"> {{ __('label.generator_users') }}
                                             <span style="color: yellow ;margin-right:3%">
-                                                ({{ \App\Models\User::query()->when(auth('admin')->user()->branch_id  ?? false, function ($q) {
+                                                ({{ \App\Models\User::query()->when(auth('admin')->user()->branch_id ?? false, function ($q) {
                                                         $q->where('branch_id', auth('admin')->user()->branch_id);
                                                     })->where('user_type_cd_id', 21)->count() }})
 
@@ -451,13 +465,13 @@
                             @endif
 
                             {{-- @if (auth('admin')->user()->can('view_ready_internet_subscription')) --}}
-                                <li class="{{ request()->segment(4) == 'ready' ? 'menu-item menu-item-active' : 'menu-item' }}"
-                                    aria-haspopup="true">
-                                    <a href="{{ route('admin.internetSubscriptions.ready') }}" class="menu-link">
-                                        <i class="menu-bullet menu-bullet-dot"><span></span></i>
-                                        <span class="menu-text">{{ __('label.active_internet_subscription') }}</span>
-                                    </a>
-                                </li>
+                            <li class="{{ request()->segment(4) == 'ready' ? 'menu-item menu-item-active' : 'menu-item' }}"
+                                aria-haspopup="true">
+                                <a href="{{ route('admin.internetSubscriptions.ready') }}" class="menu-link">
+                                    <i class="menu-bullet menu-bullet-dot"><span></span></i>
+                                    <span class="menu-text">{{ __('label.active_internet_subscription') }}</span>
+                                </a>
+                            </li>
                             {{-- @endif --}}
 
                             @if (auth('admin')->user()->can('view_available_internet_subscription'))
@@ -492,8 +506,7 @@
             @if (auth('admin')->user()->can('view_generator_subscriptions') ||
                     auth('admin')->user()->can('view_generator') ||
                     auth('admin')->user()->can('view_generator_receipt') ||
-                                        auth('admin')->user()->can('view_generator_expense') ||
-
+                    auth('admin')->user()->can('view_generator_expense') ||
                     auth('admin')->user()->can('view_generator_readings'))
                 <li class="{{ request()->segment(3) == 'generator-subscriptions' || request()->segment(3) == 'generators' || request()->segment(3) == 'receipt-generators' || request()->segment(3) == 'reading-generators' ? 'menu-item menu-item-submenu menu-item-open' : 'menu-item menu-item-submenu' }}"
                     aria-haspopup="true" data-menu-toggle="hover">
@@ -564,11 +577,10 @@
                                         class="menu-text">{{ __('label.delete_generator_subscriptions_list') }}</span>
                                 </a>
                             </li>
-                                 @can('view_generator_expense')
-                                <li class="{{ request()->segment(3) == 'expense-generators'  ? 'menu-item menu-item-active' : 'menu-item' }}"
+                            @can('view_generator_expense')
+                                <li class="{{ request()->segment(3) == 'expense-generators' ? 'menu-item menu-item-active' : 'menu-item' }}"
                                     aria-haspopup="true">
-                                    <a href="{{ route('admin.generatorExpenses.index')  }}"
-                                        class="menu-link">
+                                    <a href="{{ route('admin.generatorExpenses.index') }}" class="menu-link">
                                         <i class="menu-bullet menu-bullet-dot"><span></span></i>
                                         <span class="menu-text">{{ __('label.expense_generator_list') }}</span>
                                     </a>
@@ -783,7 +795,7 @@
                 </li>
 
             @endif
-            @if (auth('admin')->user()->can('view_wallet_movements'))
+            @if (auth('admin')->user()->can('view_wallet_movements')|| auth('admin')->user()->can('view_wallets'))
                 <li class="{{ request()->segment(3) == 'wallets' ? 'menu-item menu-item-submenu menu-item-open' : 'menu-item menu-item-submenu' }}"
                     aria-haspopup="true" data-menu-toggle="hover">
                     <a href="javascript:;" class="menu-link menu-toggle">
@@ -815,6 +827,7 @@
 
 
 
+                            @if(auth('admin')->user()->can('view_wallet'))
                             <li class="{{ request()->routeIs('admin.wallets.index') ? 'menu-item menu-item-active' : 'menu-item' }}"
                                 aria-haspopup="true">
                                 <a href="{{ route('admin.wallets.index') }}" class="menu-link">
@@ -823,6 +836,7 @@
                                 </a>
                             </li>
 
+                            @endif
 
                             <li class="{{ request()->routeIs('admin.wallets.walletRecipt') ? 'menu-item menu-item-active' : 'menu-item' }}"
                                 aria-haspopup="true">

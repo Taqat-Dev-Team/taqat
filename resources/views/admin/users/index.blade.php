@@ -208,15 +208,16 @@
                         <th style="display: none;">{{ __('label.mobile') }}</th>
                         <th style="display: none;">{{ __('label.email') }}</th>
                         <th style="display: none;">{{ __('label.name') }}</th>
-                        <th style="width: 10%;">{{ __('label.whatsapp') }}</th>
-
+                         <th style="width: 10%;">اجمالي عقود العمل</th>
+                        <th style="width: 10%;">اجمالي الحركات المالية</th>
                         <th style="width: 7%;">{{ __('label.total_work_hours') }}</th>
                         <th style="width: 9%;">{{ __('label.placement_date') }}</th>
-                        <th style="width: 9%;">رقم الحساب</th>
+                        {{-- <th style="width: 9%;">رقم الحساب</th> --}}
                         <th style="width: 9%;">{{ __('label.code_internet') }}</th>
 
 
-                        <th style="width: 10%;">{{ __('label.call_whatsapp_count') }}</th>
+                        {{-- <th style="width: 10%;">{{ __('label.call_whatsapp_count') }}</th> --}}
+                        <th style="width: 10%;">{{ __('label.whatsapp') }}</th>
 
                         <th style="width: 30%;">{{ __('label.actions') }}</th>
                     </tr>

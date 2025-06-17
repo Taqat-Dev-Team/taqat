@@ -310,7 +310,14 @@ Route::group(
                 Route::post('users/addBalance', [UsersController::class, 'addBalance'])->name('admin.users.wallet.addBalance');
                 Route::get('users/veririfcation', [UsersController::class, 'veririfcation'])->name('admin.users.veririfcation');
                 Route::get('users/getVerification', [UsersController::class, 'getVerification'])->name('admin.users.getVerification');
+                Route::get('users/getDatatable', [UsersController::class, 'getDatatable'])->name('admin.users.getDatatable');
+                Route::get('users/surveys', [UsersController::class, 'suervy'])->name('admin.users.surveys');
+
+
+
             });
+
+
 
 
             Route::group(['prefix' => 'invoices'], function () {

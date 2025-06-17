@@ -116,7 +116,7 @@
                                المرفق
 
                             </label>
-                            <input class="form-control photo" type="file" accept="image/*,.pdf" name="photo" id="photo"  >
+                            <input class="form-control photo" type="file" accept="image/*,application/pdf" name="photo" id="photo">
                             <div class="" style="color:gray">يجيب ان يكون المرفق اقل من  2 ميجا </div>
 
                             <div class="error photo">

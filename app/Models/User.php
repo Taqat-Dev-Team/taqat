@@ -189,7 +189,10 @@ class User extends Authenticatable
 
 
 
-
+     public function surveys()
+    {
+        return $this->belongsToMany(Survey::class, 'user_surveys');
+    }
     public function totalInvoiceNotPaid(){
         $skekel_amount = $this->invoices()->where('amount_type', 2)->where('status', 0)->sum('amount');
         $dollar_amount = $this->invoices()->where('amount_type', 1)->where('status', 0)->sum('amount');

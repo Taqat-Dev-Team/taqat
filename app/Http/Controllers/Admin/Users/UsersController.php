@@ -30,6 +30,7 @@ use App\Models\{
     Specialization,
     SubscriptionInternet,
     SubscriptionType,
+    Survey,
     Transaction,
     User,
     UserService,
@@ -547,7 +548,7 @@ class UsersController extends Controller
         if (!empty($user->mobile) && is_string($user->mobile) && $user->status == 1) {
 
             $message = "يسعدنا انضمامك لعائلة المبدعين والمستقلين، ونتمنى لك تجربة عمل مثمرة ومريحة معنا.";
-            // $this->smsService->sendSMS($user->mobile, $message);
+            $this->smsService->sendSMS($user->mobile, $message);
         }
         return response()->json([
             'success' => true,
@@ -627,8 +628,8 @@ class UsersController extends Controller
     public function getByDeskMangments(Request $request): JsonResponse
     {
         $deskMangments = DeskMangment::query()
-        ->doesntHave('rooms')
-        ->where('work_space_id', $request->work_space_id)
+            ->doesntHave('rooms')
+            ->where('work_space_id', $request->work_space_id)
             ->with(['users' => function ($query) {
                 $query->select('id', 'name', 'desk_mangment_id');
             }])
@@ -943,20 +944,31 @@ class UsersController extends Controller
     private function getPhotoColumn(): \Closure
     {
         return function ($user) {
-            // If the request is for under-verification users, show identity image in modal, else show profile photo
             $request = request();
+            $photoUrl = $request->status === 'under-verification'
+                ? $user->getIdPhoto()
+                : $user->getPhoto();
+
+            $profileLink = $request->status === 'under-verification'
+                ? '#'
+                : route('admin.users.views', $user->id);
+
+            $imgTag = '<img src="' . $photoUrl . '" class="circle" style="object-fit:contain;width:70px;height:70px;border-radius: 50%;">';
+
+            // Badge for verification status
+            $badge = '';
+            if ($user->is_verification == 1) {
+                $badge = '<span title="موثق" style="position:absolute;top:2px;right:2px;border-radius:50%"><i  style="color:green;background-color:white" class="fas fa-check-circle"></i></span>';
+            } elseif ($user->is_verification == 2) {
+                $badge = '<span title="موثق" style="position:absolute;top:2px;right:2px;border-radius:50%"><i  style="color:navajowhite;background-color:white" class="fas fa-check-circle"></i></span>';
+            }
+
+            $wrapperStyle = 'position:relative;display:inline-block;';
+
             if ($request->status === 'under-verification') {
-                $photoUrl = $user->getIdPhoto();
-                return '<a href="#" class="show-photo-modal" data-photo="' . $photoUrl . '">'
-                    . '<img src="' . $photoUrl . '" class="circle" '
-                    . 'style="object-fit:contain;width:70px;height:70px;border-radius: 50%;">'
-                    . '</a>';
+                return '<span style="' . $wrapperStyle . '"><a href="#" class="show-photo-modal" data-photo="' . $photoUrl . '">' . $imgTag . '</a></span>';
             } else {
-                $photoUrl = $user->getPhoto();
-                return '<a href="' . route('admin.users.views', $user->id) . '">'
-                    . '<img src="' . $photoUrl . '" class="circle" '
-                    . 'style="object-fit:contain;width:70px;height:70px;border-radius: 50%;">'
-                    . '</a>';
+                return '<span style="' . $wrapperStyle . '">' . $badge . '<a href="' . $profileLink . '">' . $imgTag . '</a></span>';
             }
         };
     }
@@ -1663,6 +1675,52 @@ class UsersController extends Controller
         return response()->json([
             'success' => true,
             'message' => __('label.success_full_process'),
+        ]);
+    }
+
+
+
+    public function getDatatable(Request $request)
+    {
+        // جلب جميع الاستبيانات الرئيسية (parent_id null)
+        $surveys = Survey::whereNull('parent_id')->get();
+
+        // جلب المستخدمين الذين لديهم استبيانات مرتبطة
+        $users = User::whereHas('surveys')->with('surveys')->get();
+
+        // إعداد DataTables
+        $datatable = DataTables::of($users)
+            ->addColumn('photo', $this->getPhotoColumn())
+            ->addColumn('DT_RowIndex', function ($user) {
+                // عادة DataTables يضيف هذا تلقائياً
+                // return ++$key;
+            })
+            ->addColumn('action', function ($user) {
+                return '';
+            });
+
+        // إضافة أعمدة ديناميكية لكل استبيان
+        foreach ($surveys as $survey) {
+            $datatable->addColumn('survey_' . $survey->id, function ($user) use ($survey) {
+                // نبحث في استبيانات المستخدم عن استبيان مرتبط بالاستبيان الرئيسي (parent_id = $survey->id)
+                $pivotSurvey = $user->surveys->firstWhere('parent_id', $survey->id);
+                return $pivotSurvey ? e($pivotSurvey->title) : '-';
+            });
+        }
+
+        // تسمح بعرض الـ HTML في أعمدة محددة (إن وُجد)
+        $datatable->rawColumns(['action','photo']);
+
+        return $datatable->make(true);
+    }
+
+    public function suervy(Request $request)
+    {
+        // جلب المستخدمين الذين لديهم استبيانات
+        $surveys = Survey::whereNull('parent_id')->get();
+
+        return view('admin.users.suervy', [
+            'surveies' => $surveys,
         ]);
     }
 }

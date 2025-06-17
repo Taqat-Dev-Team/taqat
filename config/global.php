@@ -28,6 +28,7 @@ return [
             'add_expense' => 'ااضافة مصاريف تشغيلية'
         ],
         'بيانات حركات المحفظة' => [
+            'view_wallet'=>'قائمة المحافظ المشحونة',
             'view_wallet_movements' => 'عرض كافة حركات المحفظة',
             'edit_wallet_movements' => 'تعديل حركة المحفظة',
             'delete_wallet_movements' => 'حذف حركة المحفظة',
@@ -60,6 +61,7 @@ return [
             'restore_users' => 'استعادة المستخدمين المحذوفين',
             'verification_users' => 'عرض كافة المستخدمين قيد التحقق',
             'under_examination_users' => 'عرض المستخدمين قيد الفحص',
+            'view_users_survey_menu'=> 'عرض كافة المستخدمين الذين قاموا بالاستبيان',
 
 
 

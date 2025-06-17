@@ -143,21 +143,17 @@
                     name: 'name',
                     searchable: true
                 },
-                // {
-                //     data: 'total_contracts',
-                //     name: 'total_contracts',
-                //     orderable: true
-                // },
-                // {
-                //     data: 'total_movements',
-                //     name: 'total_movements',
-                //     orderable: true
-                // },
                 {
-                    data: 'Whatsapp',
-                    name: 'Whatsapp',
-                    orderable: false
+                    data: 'total_contracts',
+                    name: 'total_contracts',
+                    orderable: true
                 },
+                {
+                    data: 'total_movements',
+                    name: 'total_movements',
+                    orderable: true
+                },
+
                 {
                     data: 'total_work_hours',
                     name: 'total_work_hours',
@@ -168,22 +164,27 @@
                     name: 'placement_date',
                     orderable: true
                 },
-                {
-                    data: 'account_id',
-                    name: 'account_id',
-                    orderable: true
-                },
+                // {
+                //     data: 'account_id',
+                //     name: 'account_id',
+                //     orderable: true
+                // },
                 {
                     data: 'code_internet',
                     name: 'code_internet',
                     orderable: true
                 },
 
-                {
-                    data: 'call_whatsapp_count',
-                    name: 'call_whatsapp_count',
-                    orderable: true,
-                    searchable: false
+                // {
+                //     data: 'call_whatsapp_count',
+                //     name: 'call_whatsapp_count',
+                //     orderable: true,
+                //     searchable: false
+                // },
+                      {
+                    data: 'Whatsapp',
+                    name: 'Whatsapp',
+                    orderable: false
                 },
                 {
                     data: 'action',
